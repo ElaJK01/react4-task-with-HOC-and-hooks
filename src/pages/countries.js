@@ -32,23 +32,23 @@ const SectionState = styled.div`
 
 const Countries = () => {
   const [countriesList, setCountriesList] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
-  const fetchCountries = () =>
-    encase(setError)(false)
-    |> and(encase(setLoading)(true))
-    |> chain(fetchData(COUNTRIES_QUERY))
-    |> lastly(encase(setLoading)(false))
-    |> fork(() => setError(true))((res) =>
-      setCountriesList(path(["data", "countries"], res))
-    );
-
-  useEffect(() => {
-    fetchCountries();
-  }, [setCountriesList]);
+  // const fetchCountries = () =>
+  //   encase(setError)(false)
+  //   |> and(encase(setLoading)(true))
+  //   |> chain(fetchData(COUNTRIES_QUERY))
+  //   |> lastly(encase(setLoading)(false))
+  //   |> fork(() => setError(true))((res) =>
+  //     setCountriesList(path(["data", "countries"], res))
+  //   );
+  //
+  // useEffect(() => {
+  //   fetchCountries();
+  // }, [setCountriesList]);
 
   const currentDataCount = () => {
     const firstPageIndex = multiply(currentPage - 1, itemsPerPage);

@@ -1,3 +1,28 @@
+# Assignment - React 4
+
+***
+
+## Configuration steps
+No steps this time.
+
+## Assignment goal
+
+<details>
+The goal of this assignment is to get more familiar with efficiend code structurization via React hooks and HOCs, and learning some uses of refs.
+</details>
+
+## Formal requirements
+
+<details>
+
+* your data fetching logic should be contained within an appropriate hook
+* you should aim to implement a minimal number of generalized hooks to cover your needs
+* while loading a new page of data and while spinner is displayed, previous page data should still be displayed
+* above should be achieved via a custom hook that uses a ref for previous value - try to write it yourself, even though it most probably is readily available on the internet
+* Both data fetching and loading should be handled via a very general HOC that will supply every page
+* Your application should now have a "dark mode" (or a light mode, if it is already dark). This should be handled with styled components theming and via a custom hook. User should be able to switch between modes via a button in the header of the page. The value of current mode should be stored in local storage
+</details>
+
 # Assignment - React 3
 
 ***

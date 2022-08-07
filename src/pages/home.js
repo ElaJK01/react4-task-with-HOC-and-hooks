@@ -8,6 +8,7 @@ import CONTINENTS_QUERY from "../../API/gqlCalls/getContinents";
 import ContinentsList from "../components/continentsList";
 import Error from "../components/error";
 import Loading from "../components/loading";
+import withLoadingData from "../withLoadingData";
 
 const homeText =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n" +
@@ -30,43 +31,63 @@ const SectionState = styled.div`
   width: 100%;
 `;
 
-const Home = () => {
-  const [continentsList, setContinentsList] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const fetchContinents = () =>
-    encase(setError)(false)
-    |> and(encase(setLoading)(true))
-    |> chain(fetchData(CONTINENTS_QUERY))
-    |> lastly(encase(setLoading)(false))
-    |> fork(() => setError(true))((res) =>
-      setContinentsList(path(["data", "continents"], res))
-    );
-
-  useEffect(() => {
-    fetchContinents();
-  }, [setContinentsList]);
-
-  return (
+const Home = withLoadingData(
+  (props) => (
     <Section
       title="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
       text={homeText}
     >
-      {error && (
-        <SectionState>
-          <Error onClick={() => fetchContinents()} />
-        </SectionState>
-      )}
-      {loading ? (
-        <SectionState>
-          <Loading />
-        </SectionState>
-      ) : (
-        <ContinentsList list={continentsList} />
-      )}
+      <ContinentsList list={path(["data", "continents"], props)} />
     </Section>
-  );
-};
+  ),
+  CONTINENTS_QUERY
+);
+
+// const Home = withLoadingData((props) => {
+//   const { data, loading, error } = props;
+//
+//   console.log("data", data);
+//   const [continentsList, setContinentsList] = useState([]);
+//
+//   useEffect(() => {
+//     setContinentsList(data |> path(["data", "continents"]));
+//   });
+//
+//   // const [error, setError] = useState(false);
+//   // const [loading, setLoading] = useState(false);
+//
+//   // const fetchContinents = () =>
+//   //   encase(setError)(false)
+//   //   |> and(encase(setLoading)(true))
+//   //   |> chain(fetchData(CONTINENTS_QUERY))
+//   //   |> lastly(encase(setLoading)(false))
+//   //   |> fork(() => setError(true))((res) =>
+//   //     setContinentsList(path(["data", "continents"], res))
+//   //   );
+//
+//   // useEffect(() => {
+//   //   fetchContinents();
+//   // }, [setContinentsList]);
+//
+//   return (
+//     <Section
+//       title="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+//       text={homeText}
+//     >
+//       {/* {error && ( */}
+//       {/*   <SectionState> */}
+//       {/*     <Error onClick={() => fetchContinents()} /> */}
+//       {/*   </SectionState> */}
+//       {/* )} */}
+//       {/* {loading ? ( */}
+//       {/*   <SectionState> */}
+//       {/*     <Loading /> */}
+//       {/*   </SectionState> */}
+//       {/* ) : ( */}
+//       <ContinentsList list={continentsList} />
+//       {/* )} */}
+//     </Section>
+//   );
+// })(CONTINENTS_QUERY);
 
 export default Home;
