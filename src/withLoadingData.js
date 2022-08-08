@@ -8,8 +8,7 @@ const withLoadingData = (Component, query) => () => {
 
   if (loading) return <Loading />;
   if (error) return <Error />;
-  return <Component data={data} />;
+  return <Component data={data} loading={loading} error={error} />;
 };
-
 
 export default withLoadingData;

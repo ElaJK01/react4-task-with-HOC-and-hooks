@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { add, length, multiply, path, slice } from "ramda";
-import { and, chain, encase, fork, lastly } from "fluture";
 import styled from "styled-components";
 import Pagination from "../components/pagination";
 import LanguagesList from "../components/languagesList";
-import Error from "../components/error";
-import Loading from "../components/loading";
 import LANGUAGES_QUERY from "../../API/gqlCalls/getLanguages";
-import { fetchData } from "../../API/fetchDataFn";
 import Section from "../components/section";
+import withLoadingData from "../withLoadingData";
 
 const languagesText =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n" +
@@ -30,25 +27,14 @@ const SectionState = styled.div`
   margin: auto;
 `;
 
-const Languages = () => {
+const Languages = withLoadingData((props) => {
   const [languagesList, setLanguagesList] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
 
-  const fetchLanguages = () =>
-    encase(setError)(false)
-    |> and(encase(setLoading)(true))
-    |> chain(fetchData(LANGUAGES_QUERY))
-    |> lastly(encase(setLoading)(false))
-    |> fork(() => setError(true))((res) =>
-      setLanguagesList(path(["data", "languages"], res))
-    );
-
   useEffect(() => {
-    fetchLanguages();
-  }, [setLanguagesList]);
+    setLanguagesList(path(["data", "languages"], props));
+  }, [props]);
 
   const currentDataCount = () => {
     const firstPageIndex = multiply(currentPage - 1, itemsPerPage);
@@ -62,33 +48,20 @@ const Languages = () => {
 
   return (
     <div>
-      <Section title={"Languages list"} text={languagesText}>
+      <Section title="Languages list" text={languagesText}>
         <div>
-          {!loading && !error && (
-            <Pagination
-              itemsPerPage={itemsPerPage}
-              totalItems={length(languagesList)}
-              paginate={handlePaginate}
-              currentPage={currentPage}
-              adjacentPages={3}
-            />
-          )}
-          {error && (
-            <SectionState>
-              <Error onClick={() => fetchLanguages()} />
-            </SectionState>
-          )}
-          {loading ? (
-            <SectionState>
-              <Loading />
-            </SectionState>
-          ) : (
-            !error && <LanguagesList list={currentData} />
-          )}
+          <Pagination
+            itemsPerPage={itemsPerPage}
+            totalItems={length(languagesList)}
+            paginate={handlePaginate}
+            currentPage={currentPage}
+            adjacentPages={3}
+          />
+          <LanguagesList list={currentData} />
         </div>
       </Section>
     </div>
   );
-};
+}, LANGUAGES_QUERY);
 
 export default Languages;

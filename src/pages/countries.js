@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { add, length, multiply, path, slice } from "ramda";
-import { and, chain, encase, fork, lastly } from "fluture";
 import styled from "styled-components";
 import Pagination from "../components/pagination";
 import CountriesList from "../components/countriesList";
-import Error from "../components/error";
-import Loading from "../components/loading";
-import { fetchData } from "../../API/fetchDataFn";
 import COUNTRIES_QUERY from "../../API/gqlCalls/getCountries";
 import Section from "../components/section";
+import withLoadingData from "../withLoadingData";
 
 const countriesText =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n" +
@@ -30,25 +27,14 @@ const SectionState = styled.div`
   margin: auto;
 `;
 
-const Countries = () => {
+const Countries = withLoadingData((props) => {
   const [countriesList, setCountriesList] = useState([]);
-  // const [error, setError] = useState(false);
-  // const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
-  // const fetchCountries = () =>
-  //   encase(setError)(false)
-  //   |> and(encase(setLoading)(true))
-  //   |> chain(fetchData(COUNTRIES_QUERY))
-  //   |> lastly(encase(setLoading)(false))
-  //   |> fork(() => setError(true))((res) =>
-  //     setCountriesList(path(["data", "countries"], res))
-  //   );
-  //
-  // useEffect(() => {
-  //   fetchCountries();
-  // }, [setCountriesList]);
+  useEffect(() => {
+    setCountriesList(path(["data", "countries"], props));
+  }, [props]);
 
   const currentDataCount = () => {
     const firstPageIndex = multiply(currentPage - 1, itemsPerPage);
@@ -64,31 +50,18 @@ const Countries = () => {
     <div>
       <Section title="Countries list" text={countriesText}>
         <div>
-          {!loading && !error && (
-            <Pagination
-              itemsPerPage={itemsPerPage}
-              totalItems={length(countriesList)}
-              paginate={handlePaginate}
-              currentPage={currentPage}
-              adjacentPages={3}
-            />
-          )}
-          {error && (
-            <SectionState>
-              <Error onClick={() => fetchCountries()} />
-            </SectionState>
-          )}
-          {loading ? (
-            <SectionState>
-              <Loading />
-            </SectionState>
-          ) : (
-            !error && <CountriesList list={currentData} />
-          )}
+          <Pagination
+            itemsPerPage={itemsPerPage}
+            totalItems={length(countriesList)}
+            paginate={handlePaginate}
+            currentPage={currentPage}
+            adjacentPages={3}
+          />
+          <CountriesList list={currentData} />
         </div>
       </Section>
     </div>
   );
-};
+}, COUNTRIES_QUERY);
 
 export default Countries;
