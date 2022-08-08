@@ -1,12 +1,9 @@
 import React from "react";
-import { map, prop } from "ramda";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { map, path, prop } from "ramda";
 import styled from "styled-components";
-import Error from "../components/error";
-import Loading from "../components/loading";
 import Section from "../components/section";
 import CONTINENT_QUERY from "../../API/gqlCalls/getContinent";
+import withLoadingData from "../withLoadingData";
 
 const ContinentContainer = styled.div`
   display: flex;
@@ -26,27 +23,20 @@ const text =
   "        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui\n" +
   "        officia deserunt mollit anim id est laborum.";
 
-const ContinentDetails = () => {
-  const { code } = useParams();
-
-  const { data, error, loading } = useQuery(CONTINENT_QUERY, {
-    variables: { code },
-  });
-
-  const continentDetails = prop("continent", data);
+const ContinentDetails = withLoadingData((props) => {
+  const continentDetails = props |> path(["data", "continent"]);
+  const countries = continentDetails |> path(["countries"]);
 
   const message = (
     <ContinentContainer>
-      {error && <Error />}
-      {loading && <Loading />}
-      {!error && !loading && continentDetails && (
+      { continentDetails && (
         <div>
           <h3>{continentDetails.name}</h3>
           <p>Code: {continentDetails.code}</p>
           <div style={{ fontSize: "10px" }}>
             Countries:{" "}
             <ul style={{ listStyle: "none" }}>
-              {continentDetails.countries
+              {countries
                 |> map((country) => (
                   <li key={prop("code", country)}>{prop("name", country)}</li>
                 ))}
@@ -62,6 +52,6 @@ const ContinentDetails = () => {
       {message}
     </Section>
   );
-};
+}, CONTINENT_QUERY);
 
 export default ContinentDetails;

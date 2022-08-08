@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const getLangInfo = gql`
+const GET_LANG_INFO = gql`
   query Language($code: ID!) {
     language(code: $code) {
       code
@@ -10,4 +10,4 @@ const getLangInfo = gql`
   }
 `;
 
-export default getLangInfo;
+export default GET_LANG_INFO;

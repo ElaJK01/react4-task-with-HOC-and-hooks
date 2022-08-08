@@ -1,12 +1,9 @@
 import React from "react";
-import { indexOf, map, prop } from "ramda";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { indexOf, map, path, prop } from "ramda";
 import styled from "styled-components";
-import Error from "../components/error";
-import Loading from "../components/loading";
 import Section from "../components/section";
 import COUNTRY_QUERY from "../../API/gqlCalls/getCountry";
+import withLoadingData from "../withLoadingData";
 
 const CountryContainer = styled.div`
   display: flex;
@@ -27,20 +24,12 @@ const textDetails =
   "        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui\n" +
   "        officia deserunt mollit anim id est laborum.";
 
-const CountryDetails = () => {
-  const { code } = useParams();
-
-  const { data, error, loading } = useQuery(COUNTRY_QUERY, {
-    variables: { code },
-  });
-
-  const countryDetails = prop("country", data);
+const CountryDetails = withLoadingData((props) => {
+  const countryDetails = props |> path(["data", "country"]);
 
   const message = (
     <CountryContainer>
-      {error && <Error />}
-      {loading && <Loading />}
-      {!error && !loading && countryDetails && (
+      {countryDetails && (
         <div>
           <h3>
             {countryDetails.name} {countryDetails.emoji}
@@ -80,6 +69,6 @@ const CountryDetails = () => {
       {message}
     </Section>
   );
-};
+}, COUNTRY_QUERY);
 
 export default CountryDetails;

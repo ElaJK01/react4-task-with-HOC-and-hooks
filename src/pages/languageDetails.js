@@ -1,12 +1,9 @@
 import React from "react";
-import { prop } from "ramda";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { path } from "ramda";
 import styled from "styled-components";
-import Error from "../components/error";
-import Loading from "../components/loading";
 import Section from "../components/section";
-import getLangInfo from "../../API/gqlCalls/getLanguageInfo";
+import GET_LANG_INFO from "../../API/gqlCalls/getLanguageInfo";
+import withLoadingData from "../withLoadingData";
 
 const languageText =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n" +
@@ -23,20 +20,14 @@ const LanguageContainer = styled.div`
   align-items: center;
 `;
 
-const LanguageDetails = () => {
-  const { code } = useParams();
+const LanguageDetails = withLoadingData((props) => {
 
-  const { data, error, loading } = useQuery(getLangInfo, {
-    variables: { code },
-  });
 
-  const languageDetails = prop("language", data);
+  const languageDetails = props |> path(["data", "language"]);
 
   const message = (
     <LanguageContainer>
-      {error && <Error />}
-      {loading && <Loading />}
-      {!error && !loading && languageDetails && (
+      {languageDetails && (
         <div>
           <p>Language Name: {languageDetails.name}</p>
           <p>Code: {languageDetails.code}</p>
@@ -51,6 +42,6 @@ const LanguageDetails = () => {
       {message}
     </Section>
   );
-};
+}, GET_LANG_INFO);
 
 export default LanguageDetails;
