@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { add, length, multiply, path, slice } from "ramda";
-import styled from "styled-components";
 import Pagination from "../components/pagination";
 import LanguagesList from "../components/languagesList";
 import LANGUAGES_QUERY from "../../API/gqlCalls/getLanguages";
@@ -18,14 +17,6 @@ const languagesText =
   "        in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n" +
   "        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui\n" +
   "        officia deserunt mollit anim id est laborum.";
-
-const SectionState = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-`;
 
 const Languages = withLoadingData((props) => {
   const [languagesList, setLanguagesList] = useState([]);

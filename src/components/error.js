@@ -30,6 +30,7 @@ const ButtonError = styled.button`
 
 const Error = ({ onClick }) => (
   <ErrorDiv>
+    {/* eslint-disable-next-line react/no-unescaped-entities */}
     <ErrorParagraph>Sorry, couldn't get what you want!</ErrorParagraph>
     <SmallImage image={error} altName="error" />
     {onClick && <ButtonError onClick={onClick}>Try again!</ButtonError>}

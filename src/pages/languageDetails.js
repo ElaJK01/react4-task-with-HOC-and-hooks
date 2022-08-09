@@ -21,8 +21,6 @@ const LanguageContainer = styled.div`
 `;
 
 const LanguageDetails = withLoadingData((props) => {
-
-
   const languageDetails = props |> path(["data", "language"]);
 
   const message = (

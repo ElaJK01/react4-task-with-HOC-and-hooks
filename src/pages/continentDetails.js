@@ -29,7 +29,7 @@ const ContinentDetails = withLoadingData((props) => {
 
   const message = (
     <ContinentContainer>
-      { continentDetails && (
+      {continentDetails && (
         <div>
           <h3>{continentDetails.name}</h3>
           <p>Code: {continentDetails.code}</p>

@@ -72,6 +72,7 @@ const CardInfo = styled.div`
   font-size: 10px;
   padding: 0;
   margin-bottom: 10px;
+  color: ${({ theme }) => theme.cardText};
 `;
 
 const CountriesList = ({ list }) => (
