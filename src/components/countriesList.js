@@ -1,6 +1,7 @@
 import React from "react";
 import { map, prop } from "ramda";
 import styled from "styled-components";
+import CardButton from "./cardButton";
 
 const ListContainer = styled.div`
   display: flex;
@@ -43,24 +44,6 @@ const CardTitle = styled.h4`
   padding: 0;
 `;
 
-const CardButton = styled.a`
-  text-decoration: none;
-  background: whitesmoke;
-  border-style: none;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  width: 30%;
-  color: gray;
-  font-size: 10px;
-  text-align: center;
-  :hover {
-    background: white;
-    color: black;
-  }
-`;
-
 const CardInfo = styled.div`
   display: flex;
   justify-content: center;
@@ -100,7 +83,7 @@ const CountriesList = ({ list }) => (
                 <li>Capital: {prop("capital", country)}</li>
               </ul>
             </CardInfo>
-            <CardButton href={`/countries/${prop("code", country)}`}>
+            <CardButton to={`/countries/${prop("code", country)}`}>
               Details
             </CardButton>
           </CardContent>

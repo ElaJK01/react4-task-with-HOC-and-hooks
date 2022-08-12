@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const Button = styled.a`
+const Button = styled(Link)`
   color: black;
   text-decoration: none;
   background: whitesmoke;
@@ -32,6 +33,6 @@ const Button = styled.a`
   }
 `;
 
-const CardButton = ({ link }) => <Button href={link}>More Info</Button>;
+const CardButton = ({ to }) => <Button to={to}>More Info</Button>;
 
 export default CardButton;

@@ -13,6 +13,9 @@ module.exports = {
     },
     ecmaVersion: "latest",
     sourceType: "module",
+    babelOptions: {
+      presets: ["@babel/preset-react"],
+    },
   },
   plugins: ["react", "prettier"],
   rules: {
@@ -27,4 +30,5 @@ module.exports = {
     "no-unused-expressions": 0,
   },
   parser: "@babel/eslint-parser",
+  ignorePatterns: ["graphql.tsx"],
 };
