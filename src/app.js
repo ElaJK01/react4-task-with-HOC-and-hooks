@@ -41,9 +41,6 @@ const GlobalStyle = createGlobalStyle`
       width: 90%;
     }
 
-    p {
-      font-size: 10px;
-    }
   }
 `;
 

@@ -9,7 +9,7 @@ const FooterDiv = styled.div`
   justify-content: center;
   align-items: center;
   column-gap: 30px;
-  background: whitesmoke;
+  background: ${({ theme }) => theme.navbarFooterBackground};
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 20px;
   margin-top: auto;

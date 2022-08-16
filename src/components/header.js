@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Navbar from "./navbar";
 import { navButtonList } from "../constants";
-import ImgHeader from "./imgHeader";
 
 const HeaderRoot = styled.div`
   display: flex;
@@ -43,10 +42,17 @@ const HeaderH1 = styled.h1`
   }
 `;
 
+const ImgDiv = styled.div`
+  background-image: url("../assets/map.jpg");
+  background-position: -200px -700px;
+  width: 100%;
+  height: 100px;
+`;
+
 const Header = () => (
   <HeaderRoot>
     <HeaderContainer>
-      <ImgHeader src="https://picsum.photos/id/1002/1000/50" alt="header-img" />
+      <ImgDiv />
       <HeaderTitle>
         <HeaderH1>Countries and Languages</HeaderH1>
       </HeaderTitle>

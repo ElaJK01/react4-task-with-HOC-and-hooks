@@ -98,7 +98,7 @@ const Card = ({ img, link }) => (
     <CardContent>
       <CardTitle>Consectetur adipiscing elit</CardTitle>
       <CardParagraph>Dignissim diam quis enim lobortis</CardParagraph>
-      <CardButton link={link} />
+      <CardButton to={link} />
     </CardContent>
   </CardContainer>
 );

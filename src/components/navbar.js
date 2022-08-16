@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { indexOf, map } from "ramda";
 
 const NavbarRoot = styled.nav`
-  background: whitesmoke;
+  background: ${({ theme }) => theme.navbarFooterBackground};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,18 +23,17 @@ const NavbarRoot = styled.nav`
 const NavButton = styled(Link)`
   height: 70%;
   border-radius: 5px;
-  background-color: whitesmoke;
+  background-color: ${({ theme }) => theme.navbarButtonBackground};
   border: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  font-size: 10px;
   text-align: center;
   padding: 2px 4px 2px 4px;
-  color: black;
+  color: ${({ theme }) => theme.text};
   text-decoration: none;
   :hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    background: white;
+    background: ${({ theme }) => theme.navbarButtonBackgroundHover};
   }
   @media screen and (min-width: 320px) and (max-width: 768px) {
     font-size: 0.6rem;

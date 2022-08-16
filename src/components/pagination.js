@@ -4,13 +4,14 @@ import styled, { css } from "styled-components";
 import { DOTS } from "../constants";
 
 const PaginationContainer = styled.div`
-  background-color: whitesmoke;
+  background-color: ${({ theme }) => theme.paginationBackground};
+  border-radius: 5px;
   display: flex;
   height: fit-content;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 20px;
+  width: 40px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   margin: 5px;
@@ -34,15 +35,17 @@ const ArrowUp = styled.button`
   align-items: center;
   border-style: none;
   border-radius: 5px;
+  margin-top: 5px;
   margin-bottom: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   color: gray;
-  width: 100%;
+  width: 70%;
   cursor: pointer;
   pointer-events: all;
+  background-color: ${({ theme }) => theme.paginationBtnBackground}
   :hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: ${({ theme }) => theme.paginationBtnBackgroundHover};
   }
 `;
 
@@ -57,40 +60,41 @@ const ArrowDown = styled.button`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   color: gray;
-  width: 100%;
+  width: 70%;
   cursor: pointer;
   pointer-events: all;
   transform: rotate(3.142rad);
+  background-color: ${({ theme }) => theme.paginationBtnBackground}
   :hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: ${({ theme }) => theme.paginationBtnBackgroundHover};
   }
 `;
 
 const FloatingPanelButton = styled.button`
-  background: ${({ active }) => (active ? "rgba(0, 0, 0, 0.2)" : "whitesmoke")};
-  border-style: none;
+  background-color: ${({ active, theme }) =>
+    active ? "rgba(0, 0, 0, 0.2)" : theme.paginationBtnBackground};
+  border-style: solid;
+  border-width: thin;
   border-radius: 5px;
   margin-bottom: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  color: gray;
-  font-size: 10px;
+  color: ${({ theme }) => theme.text};
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
-  color: black;
+  width: 70%;
   text-decoration: none;
   cursor: pointer;
   :hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: ${({ theme }) => theme.paginationBtnBackgroundHover};
   }
 `;
 
 const Svg = styled.svg`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   vertical-align: middle;
   overflow: hidden;
 `;
